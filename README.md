@@ -1,1 +1,1 @@
-node app.js 运行后端代码
+运行后端代码命令 node app.js 
