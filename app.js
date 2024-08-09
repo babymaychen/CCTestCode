@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const app = express();
 var db = require("./db");
 const port = 3000;
-// var indexRouter = require("./routes/index");
 
 //解决跨域问题
 app.use(function (request, response, next) {
@@ -18,7 +17,7 @@ app.use(function (request, response, next) {
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
-    extended: false,
+    extended: true,
   })
 );
 
@@ -32,13 +31,14 @@ app.get("/profiles", function (request, response) {
   });
 });
 
-app.post("/profiles", function (request, response) {
+app.put("/profiles/:id", function (request, response) {
+  const id = request.params.id;
   const { userName, email, phone } = request.body;
-  db.createProfile(userName, email, phone, function (error) {
+  db.updateProfileById(id, userName, email, phone, function (error) {
     if (error) {
       response.status(500).end();
     } else {
-      response.status(201).end();
+      response.status(200).end();
     }
   });
 });
